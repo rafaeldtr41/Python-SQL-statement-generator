@@ -20,32 +20,33 @@ def excelDataGrabSQLGen(fileName, firstRow, lastRow, firstCol1, secondCol1):
     wb = openpyxl.load_workbook(fileName) #loads the excel file into the python IDE.
     dataSheet = input("What page of the file would you like to grab data from?") #Allows the user to selct a specific sheet within the excel file from which data can be taken.
     sheet = wb[dataSheet]
-    sqlTableName = input("This version of the program is for generating sql statements, what is the table name?")
+    sqlTableName = input("This version of the program is for generating sql statements,"
+    " what is the table name?")
     handler = True
     lista = ()
+    lista1 = ()
     while handler:
         sqlCol = input("What is the sql column heading?, type 0 when you done")
+        numbCol = input ("the number of the column")
         if sqlCol != "0": 
             lista.__add__(sqlCol)
+            lista1.__add__(numbCol)
         else:
             handler = False
 
-    aux = generate_half(lista)
+    aux = generate_half(lista, sqlTableName)
 
-    """
-    sqlCol1 = input("What is the first sql column heading?")
-    sqlCol2 = input("What is the second sql column heading?")
-    #sqlCol3 = input("What is the third sql column heading?")
-    """
+   
     for row in range(firstRow, lastRow + 1):
         aux1 = aux #To dont charge the same function n times
         for cell in row:
 
-            if lista.__contains__(cell.column):
+            if lista1.__contains__(cell.column):
                 aux1 = aux1 + cell.value + ",\n"
         aux1 = aux1 + "\n);"
+   
     print(aux1)
-
+    wb.close()
 
 
 
